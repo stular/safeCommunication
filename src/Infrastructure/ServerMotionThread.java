@@ -31,7 +31,6 @@ public class ServerMotionThread extends Thread {
         try {
             
             this.dataExchange.keyExchange();
-            
             byte[] dataBytes = this.dataExchange.readBytesEnc();
             
             String time = Instant.now().toString();
@@ -42,8 +41,8 @@ public class ServerMotionThread extends Thread {
             os.write(dataBytes);
             os.flush();
             os.close();
-            
-            this.dataExchange.disconnect();
+
+            //this.dataExchange.disconnect();
             System.out.println("Client disconnected");
             System.out.println("File Received at " + time);
         } catch (Exception e) {
