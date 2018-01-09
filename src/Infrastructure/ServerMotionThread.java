@@ -31,20 +31,29 @@ public class ServerMotionThread extends Thread {
         try {
             
             this.dataExchange.keyExchange();
+            while(true) {
             byte[] dataBytes = this.dataExchange.readBytesEnc();
             
             String time = Instant.now().toString();
             time = time.substring(0,time.length()-5);
             time = time.replace("-", "").replace(":", "");
             
+            if (dataBytes.length == 0) {
+                break;
+            }
+            
+            if (dataBytes.length > 0) {
+                
             OutputStream os = new FileOutputStream("E:\\SaiMalmo\\ConnectedSystems\\Project\\New Folder\\" + time + ".jpeg");
             os.write(dataBytes);
             os.flush();
             os.close();
-
-            //this.dataExchange.disconnect();
             System.out.println("Client disconnected");
             System.out.println("File Received at " + time);
+            }
+            }
+            //this.dataExchange.disconnect();
+            
         } catch (Exception e) {
         }
 
